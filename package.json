@@ -10,6 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-navigation/native": "^6.1.9",
+    "@sentry/react-native": "^7.7.0",
     "react": "19.0.0",
     "react-native": "0.78.2"
   },
