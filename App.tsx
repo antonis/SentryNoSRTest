@@ -14,23 +14,27 @@ import {Button, View, StyleSheet, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 
+export const navigationIntegration = Sentry.reactNavigationIntegration({
+  enableTimeToInitialDisplay: true,
+});
+
 Sentry.init({
   dsn: 'YOUR_SENTRY_DSN_HERE',
-
-  // Adds more context data to events (IP address, cookies, user, etc.)
-  // For more information, visit: https://docs.sentry.io/platforms/react-native/data-management/data-collected/
-  sendDefaultPii: true,
-
-  // Enable Logs
-  enableLogs: true,
-
-  // Configure Session Replay
-  replaysSessionSampleRate: 0.0,
-  replaysOnErrorSampleRate: 1.0,
-  integrations: [Sentry.mobileReplayIntegration(), Sentry.feedbackIntegration()],
-
-  // uncomment the line below to enable Spotlight (https://spotlightjs.com)
-  // spotlight: __DEV__,
+  tracesSampleRate: 0.2,
+  environment: 'development',
+  appHangTimeoutInterval: 10,
+  enableUserInteractionTracing: true,
+  replaysSessionSampleRate: 0.0, // No need to record full session
+  replaysOnErrorSampleRate: 1.0, // Record a replay for 100% of error sessions
+  integrations: [
+    Sentry.mobileReplayIntegration({
+      maskAllText: false,
+      maskAllImages: false,
+      maskAllVectors: false,
+    }),
+    Sentry.reactNativeTracingIntegration(),
+    navigationIntegration,
+  ],
 });
 
 function App(): React.JSX.Element {
@@ -40,9 +44,7 @@ function App(): React.JSX.Element {
     <NavigationContainer
       ref={containerRef}
       onReady={() => {
-        // This is where navigationIntegration.registerNavigationContainer(containerRef)
-        // would be called when Sentry is integrated
-        console.log('Navigation container ready');
+        navigationIntegration.registerNavigationContainer(containerRef);
       }}>
       <View style={styles.container}>
         <Text style={styles.title}>Sentry Issue #5074 Reproduction</Text>
