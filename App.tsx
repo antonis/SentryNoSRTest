@@ -19,7 +19,7 @@ export const navigationIntegration = Sentry.reactNavigationIntegration({
 });
 
 Sentry.init({
-  dsn: 'https://1df17bd4e543fdb31351dee1768bb679@o447951.ingest.sentry.io/5428561',
+  dsn: 'YOUR_SENTRY_DSN_HERE',
   tracesSampleRate: 0.2,
   environment: 'development',
   appHangTimeoutInterval: 10,
