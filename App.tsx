@@ -19,7 +19,7 @@ export const navigationIntegration = Sentry.reactNavigationIntegration({
 });
 
 Sentry.init({
-  dsn: 'YOUR_SENTRY_DSN_HERE',
+  dsn: 'https://1df17bd4e543fdb31351dee1768bb679@o447951.ingest.sentry.io/5428561',
   tracesSampleRate: 0.2,
   environment: 'development',
   appHangTimeoutInterval: 10,
@@ -53,7 +53,7 @@ function App(): React.JSX.Element {
           not to be recorded when used with React Navigation integration.
         </Text>
         <Button
-          title="Test Crash"
+          title="Test Crash with sentry-label"
           // Having sentry-label will affect the sentry replay session
           // with sentry-label, iOS not able to record replay session
           // Android totally not able to record replay session
@@ -64,9 +64,9 @@ function App(): React.JSX.Element {
         />
         <View style={styles.spacer} />
         <Button
-          title="Test Button Without sentry-label"
+          title="Test Crash without sentry-label"
           onPress={() => {
-            console.log('Button without sentry-label pressed');
+            throw new Error('Test Crash New App Replay');
           }}
         />
       </View>
