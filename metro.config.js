@@ -10,6 +10,7 @@ const {
  *
  * @type {import('@react-native/metro-config').MetroConfig}
  */
-const config = {};
-
-module.exports = withSentryConfig(mergeConfig(getDefaultConfig(__dirname), config));
+const config = getDefaultConfig(__dirname);
+module.exports = withSentryConfig(config, {
+  annotateReactComponents: true,
+});
